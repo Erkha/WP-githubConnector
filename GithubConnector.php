@@ -13,6 +13,7 @@ class GitConnector
     public function __construct()
     {
         include_once plugin_dir_path( __FILE__ ).'/GitConnector_Widget.php';
+        include_once(plugin_dir_path( __FILE__ ).'/vendor/autoload.php');
         add_action('widgets_init', function(){register_widget('GitConnector_Widget');});
     }
 }
