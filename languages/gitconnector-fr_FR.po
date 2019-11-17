@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GithubConnector\n"
-"POT-Creation-Date: 2019-11-11 19:47+0100\n"
-"PO-Revision-Date: 2019-11-11 19:48+0100\n"
+"POT-Creation-Date: 2019-11-17 19:05+0100\n"
+"PO-Revision-Date: 2019-11-17 19:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: JMT\n"
 "Language: fr\n"
@@ -10,19 +10,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.2.4\n"
-"X-Poedit-Basepath: .\n"
+"X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: _e;__\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: vendor\n"
+"X-Poedit-SearchPathExcluded-1: languages\n"
 
-#: GitConnector_Widget.php:19
+#: GitConnector_Widget.php:36
 msgid "Github Account:"
 msgstr "Compte Github :"
 
-#: GitConnector_Widget.php:23
+#: GitConnector_Widget.php:43
 msgid "Repository:"
 msgstr "Dépot :"
 
-#: GitConnector_Widget.php:27
+#: GitConnector_Widget.php:49
 msgid "Number of commits to display:"
 msgstr "Nombre de commits à afficher :"
+
+#: src/GitRepository.php:39 src/GitRepository.php:56
+msgid "latest activity from:"
+msgstr "Activité récente sur :"
+
+#: src/GitRepository.php:126
+msgid "commits to display must be numeric"
+msgstr "le nombre de commits à afficher doit etre un entier"
+
+#: src/GitRepository.php:133
+msgid "repository must be a string with at least one character"
+msgstr "le  nom du dépôt doit être une chaîne avec au moins un caractère"
+
+#: src/GitRepository.php:142
+msgid "account must be a string with at least one character"
+msgstr "le  nom du compte Github doit être une chaîne avec au moins un caractère"

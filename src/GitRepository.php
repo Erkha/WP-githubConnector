@@ -53,7 +53,7 @@ class GitRepository
         {
             ob_start(); ?>
         <div class="widget">
-            <p class="widget-title"> <?= _e('latest activity from:') ?> </p>
+            <p class="widget-title"> <?= _e('Latest activity from:') ?> </p>
             <ul>
                 <li style="text-align :center;"><?= $this->account ?>/<?= $this->repository ?></li>
             </ul>
