@@ -1,37 +1,57 @@
 <?php
 
-use TheSeer\Tokenizer\Exception;
-
 class GitRepository
 {
     public $account;
     public $repository;
     public $commits;
 
-    
-    public function __construct($account, $repository, $commits)
+
+    public function init($account, $repository, $commits)
     {
         $this->setAccount($account)
-             ->setRepository($repository)
-             ->setCommits($commits);
+            ->setRepository($repository)
+            ->setCommits($commits);
     }
 
-    public function display()
+    public function display($account, $repository, $commits)
     {
-        $transientName = $this->account . $this->repository . $this->commits;
-        $logFromTransient = unserialize(get_transient($transientName));
-        if ($logFromTransient) {
-            return $this->generateDisplay($logFromTransient);
+        try {
+            $this->init($account, $repository, $commits);
+            $transientName = $this->account . $this->repository . $this->commits;
+            $logFromTransient = unserialize(get_transient($transientName));
+            if ($logFromTransient) {
+                return $this->displayLog($logFromTransient);
+            }
+            $log = $this->callGitApi();
+            $formatedLog = $this->formatLog($log);
+            set_transient($transientName, serialize($formatedLog), 20);
+            return $this->displayLog($formatedLog);
+        } catch (Exception $e) {
+            return  $this->displayError($e);
         }
-        $log = $this->callGitApi();
-        $formatedLog = $this->formatLog($log);
-        set_transient($transientName, serialize($formatedLog), 20);
-        return $this->generateDisplay($formatedLog);
     }
 
-    private function generateDisplay($displayedLog)
+    private function displayError($e)
     {
         ob_start(); ?>
+        <div class="widget">
+            <p class="widget-title"> <?= _e('latest activity from:') ?> </p>
+            <ul>
+                <li style="text-align :center;">
+                    <?= $this->account ?>/<?= $this->repository ?>
+                    <?= $e->getMessage(); ?>
+                </li>
+            </ul>
+        </div>
+        <?php
+        
+        return ob_get_clean();
+        }
+
+        private function displayLog($displayedLog)
+        {
+            ob_start(); ?>
         <div class="widget">
             <p class="widget-title"> <?= _e('latest activity from:') ?> </p>
             <ul>
@@ -99,8 +119,7 @@ class GitRepository
 
     private function setCommits($commits)
     {
-        if(is_numeric($commits))
-        {
+        if (is_numeric($commits)) {
             $this->commits = $commits;
             return $this;
         }
@@ -110,8 +129,7 @@ class GitRepository
     private function setRepository($repository)
     {
         $this->repository = htmlspecialchars($repository);
-        if(empty($repository))
-        {
+        if (empty($repository)) {
             return new Exception(_e("repository must be a string with at least one character"));
         }
         return $this;
@@ -120,8 +138,7 @@ class GitRepository
     private function setAccount($account)
     {
         $this->account = htmlspecialchars($account);
-        if(empty($account))
-        {
+        if (empty($account)) {
             return new Exception(_e("account must be a string with at least one character"));
         }
         return $this;

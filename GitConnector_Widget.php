@@ -20,12 +20,9 @@ class GitConnector_Widget extends WP_Widget
     
     public function widget($args, $instance)
     {
-        try {
-            $this->gitRepository = new GitRepository($instance['githubAccount'],$instance['repository'],$instance['commitQty']);
-            echo $this->gitRepository->display();
-        } catch (Exception $e) {
-            echo $e->message;
-        }
+        $this->gitRepository = new GitRepository();
+        echo $this->gitRepository->display($instance['githubAccount'],$instance['repository'],$instance['commitQty']);
+   
     }
 
     public function form($instance)
