@@ -12,7 +12,7 @@ class GitConnector_Widget extends WP_Widget
             'GitConnector',
             'GitConnector',
             array(
-                'description' => 'Un formulaire d\'inscription à la newsletter.'
+                'description' => 'Retrieve latests commits of a repository from a public account'
             )
         );
         load_plugin_textdomain('gitconnector', false, dirname(plugin_basename(__FILE__)) . '/languages');
@@ -20,9 +20,12 @@ class GitConnector_Widget extends WP_Widget
     
     public function widget($args, $instance)
     {
-        $this->gitRepository = new GitRepository($instance['githubAccount'],$instance['repository'],$instance['commitQty']);
-        echo $this->gitRepository->display();
-        
+        try {
+            $this->gitRepository = new GitRepository($instance['githubAccount'],$instance['repository'],$instance['commitQty']);
+            echo $this->gitRepository->display();
+        } catch (Exception $e) {
+            echo $e->message;
+        }
     }
 
     public function form($instance)
@@ -50,6 +53,6 @@ class GitConnector_Widget extends WP_Widget
             <input class="widefat" id="<?php echo $this->get_field_id('commitQty'); ?>" 
             name="<?php echo $this->get_field_name('commitQty'); ?>" type="number" value="<?php echo  $commitQty; ?>" />
         </p>
-<?php
+        <?php
     }
 }
