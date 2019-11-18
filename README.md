@@ -12,3 +12,4 @@ Using KnpLabs/php-github-api for  github requests, you need to have composer ins
 * [ ] add more complex options when parametering widget
 * [ ] add a refresh button with the widget
 * [ ] try WP-Cli  in order to add some unit tests
+* [ ] how to manage languages for plugins and widgets
